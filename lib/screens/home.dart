@@ -144,39 +144,43 @@ class _HomePageState extends State<HomePage> {
           children: [
             welcomePicture(),
             const SizedBox(width: 15),
-            const SizedBox(
-            width: 200,
-              child: Column(              
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Spacer(),                
-                Text(
-                  'Welcome Back!',
-                  style: TextStyle(
-                    fontFamily: 'Gellix', 
-                    fontSize: 16,
-                    fontWeight: FontWeight.w700,
-                    color: Colors.black, 
-                  ),
-                ),
-                SizedBox(height: 6),            
-                Text(
-                  'Monday, 3 October',
-                  style: TextStyle(
-                    fontFamily: 'Gellix', 
-                    fontSize: 12,
-                    fontWeight: FontWeight.w400,
-                    color: Color(0xFF9397A0) 
-                  ),
-                ),
-                Spacer(),              
-
-                ],
-              ),
-            ),
+            welcomeText(),
           ]
         ),
       );
+  }
+
+  SizedBox welcomeText() {
+    return const SizedBox(
+          width: 200,
+            child: Column(              
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Spacer(),                
+              Text(
+                'Welcome Back!',
+                style: TextStyle(
+                  fontFamily: 'Gellix', 
+                  fontSize: 16,
+                  fontWeight: FontWeight.w700,
+                  color: Colors.black, 
+                ),
+              ),
+              SizedBox(height: 6),            
+              Text(
+                'Monday, 3 October',
+                style: TextStyle(
+                  fontFamily: 'Gellix', 
+                  fontSize: 12,
+                  fontWeight: FontWeight.w400,
+                  color: Color(0xFF9397A0) 
+                ),
+              ),
+              Spacer(),              
+
+              ],
+            ),
+          );
   }
   
   Container welcomePicture() {
@@ -209,17 +213,7 @@ class _HomePageState extends State<HomePage> {
             color: Color(0xFFA7A7A7),
             fontSize: 12
           ),
-          suffixIcon: Container(
-            padding: const EdgeInsets.all(20.0),
-            decoration: BoxDecoration(
-              color: const Color(0xFF5474FD),
-              borderRadius: BorderRadius.circular(20),
-            ),
-            child: Transform.scale(
-              scale: 1.2, 
-              child: SvgPicture.asset('assets/icons/search_icon.svg'),
-            ),
-          ),
+          suffixIcon: searchBarIcon(),
           border: OutlineInputBorder(
             borderRadius: BorderRadius.circular(20),
             borderSide: BorderSide.none
@@ -227,6 +221,20 @@ class _HomePageState extends State<HomePage> {
         )
       ),
     );
+  }
+
+  Container searchBarIcon() {
+    return Container(
+          padding: const EdgeInsets.all(20.0),
+          decoration: BoxDecoration(
+            color: const Color(0xFF5474FD),
+            borderRadius: BorderRadius.circular(20),
+          ),
+          child: Transform.scale(
+            scale: 1.2, 
+            child: SvgPicture.asset('assets/icons/search_icon.svg'),
+          ),
+        );
   }
   
   Container tags() {
@@ -331,65 +339,70 @@ Column postContent(int index) {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             const SizedBox(height: 10),
-            Padding(
-              padding: const EdgeInsets.only(left: 12.0),
-              child: Container(
-                width: 240,
-                height: 170,
-                decoration: BoxDecoration(
-                  color: Colors.white,
-                  borderRadius: BorderRadius.circular(25),
-                  image: DecorationImage(
-                    image: AssetImage(posts[index].bgPath),
-                    fit: BoxFit.cover
-                  )
-                )
-              ),
-            ),
-
+            cardThumbnail(index),
             const SizedBox(height: 15),
-
-            Padding(
-              padding: const EdgeInsets.only(left: 12.0),
-              child: SizedBox(
-                width: 240,
-                child: Text(
-                  posts[index].line1,
-                  overflow: TextOverflow.ellipsis, 
-                  maxLines: 1,
-                  style: const TextStyle(
-                    fontWeight: FontWeight.w600,
-                    fontSize: 15
-                  )
-                ),
-              ),
-            ),
-
+            cardTitle1(index),
             const SizedBox(height: 3),
-
-            Padding(
-              padding: const EdgeInsets.only(left: 12.0),
-              child: SizedBox(
-                width: 240,
-                child: Text(
-                  posts[index].line2,
-                  overflow: TextOverflow.ellipsis, 
-                  maxLines: 1,
-                  style: const TextStyle(
-                    fontWeight: FontWeight.w600,
-                    fontSize: 15
-                  )
-                ),
-              ),
-            ),
-
+            cardTitle2(index),
             const SizedBox(height: 10),
-
             posterInfo(index),
-
             const SizedBox(height: 5)
           ],
         );
+}
+
+Padding cardTitle2(int index) {
+  return Padding(
+            padding: const EdgeInsets.only(left: 12.0),
+            child: SizedBox(
+              width: 240,
+              child: Text(
+                posts[index].line2,
+                overflow: TextOverflow.ellipsis, 
+                maxLines: 1,
+                style: const TextStyle(
+                  fontWeight: FontWeight.w600,
+                  fontSize: 15
+                )
+              ),
+            ),
+          );
+}
+
+Padding cardTitle1(int index) {
+  return Padding(
+            padding: const EdgeInsets.only(left: 12.0),
+            child: SizedBox(
+              width: 240,
+              child: Text(
+                posts[index].line1,
+                overflow: TextOverflow.ellipsis, 
+                maxLines: 1,
+                style: const TextStyle(
+                  fontWeight: FontWeight.w600,
+                  fontSize: 15
+                )
+              ),
+            ),
+          );
+}
+
+Padding cardThumbnail(int index) {
+  return Padding(
+            padding: const EdgeInsets.only(left: 12.0),
+            child: Container(
+              width: 240,
+              height: 170,
+              decoration: BoxDecoration(
+                color: Colors.white,
+                borderRadius: BorderRadius.circular(25),
+                image: DecorationImage(
+                  image: AssetImage(posts[index].bgPath),
+                  fit: BoxFit.cover
+                )
+              )
+            ),
+          );
 }
 
 
@@ -409,91 +422,97 @@ Container posterInfo(int index) {
               height: 45,
               child: Row(
                 children: [
-
-                  Padding(
-                    padding: const EdgeInsets.only(left: 5.0),
-                    child: GestureDetector(
-                      onTap: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) {
-                              return AuthorProfile(authorIndex: index);
-                            },
-                          ),
-                        );
-                      },
-                      child: CircleAvatar(
-                        radius: 25,
-                        backgroundImage: AssetImage(matchingUser?.dpPath ?? 'assets/images/blankDp'),
-                      ),
-                    ),
-                  ),
-
-
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Padding(
-                        padding: const EdgeInsets.only(left: 10, top: 5),
-                        child: GestureDetector(
-                          onTap: () {
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                builder: (context) {
-                                  return AuthorProfile(authorIndex: index);
-                                },
-                              ),
-                            );
-                          },
-                          child: Text(
-                            posts[index].name,
-                            style: const TextStyle(
-                              fontFamily: 'Gellix',
-                              fontWeight: FontWeight.w600,
-                              fontSize: 13.5,
-                            ),
-                          ),
-                        ),
-                      ),
-
-                      Padding(
-                        padding: const EdgeInsets.only(left: 10),
-                        child: Text(
-                          '${posts[index].date}, 2022',
-                          style: const TextStyle(
-                          color: Color(0xFF9397A0),
-                          fontFamily: 'Gellix',
-                          fontWeight: FontWeight.w400,
-                          fontSize: 13.5
-                          )                           
-                        )
-                      ),
-                    ],
-                  ),
-
+                  opProfilePic(index, matchingUser),
+                  opName(index),
                   const Spacer(),
-                  
-                  Padding(
-                    padding: const EdgeInsets.only(right: 10),
-                    child: Container(
-                      width: 50,
-                      height: 50,
-                      decoration: BoxDecoration(
-                        color: const Color(0xFFEFF5F4),
-                        borderRadius: BorderRadius.circular(15),
-                      ),
-                      child: Transform.scale(
-                        scale: 0.5, 
-                        child: SvgPicture.asset('assets/icons/share_icon.svg'),
-                      )
-                    ),
-                  )
-                  
+                  shareIcon()  
                 ],
               ),
             );
+}
+
+Padding shareIcon() {
+  return Padding(
+                  padding: const EdgeInsets.only(right: 10),
+                  child: Container(
+                    width: 50,
+                    height: 50,
+                    decoration: BoxDecoration(
+                      color: const Color(0xFFEFF5F4),
+                      borderRadius: BorderRadius.circular(15),
+                    ),
+                    child: Transform.scale(
+                      scale: 0.5, 
+                      child: SvgPicture.asset('assets/icons/share_icon.svg'),
+                    )
+                  ),
+                );
+}
+
+Column opName(int index) {
+  return Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.only(left: 10, top: 5),
+                      child: GestureDetector(
+                        onTap: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) {
+                                return AuthorProfile(authorIndex: index);
+                              },
+                            ),
+                          );
+                        },
+                        child: Text(
+                          posts[index].name,
+                          style: const TextStyle(
+                            fontFamily: 'Gellix',
+                            fontWeight: FontWeight.w600,
+                            fontSize: 13.5,
+                          ),
+                        ),
+                      ),
+                    ),
+
+                    Padding(
+                      padding: const EdgeInsets.only(left: 10),
+                      child: Text(
+                        '${posts[index].date}, 2022',
+                        style: const TextStyle(
+                        color: Color(0xFF9397A0),
+                        fontFamily: 'Gellix',
+                        fontWeight: FontWeight.w400,
+                        fontSize: 13.5
+                        )                           
+                      )
+                    ),
+                  ],
+                );
+}
+
+Padding opProfilePic(int index, UserModel? matchingUser) {
+  return Padding(
+                  padding: const EdgeInsets.only(left: 5.0),
+                  child: GestureDetector(
+                    onTap: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) {
+                            return AuthorProfile(authorIndex: index);
+                          },
+                        ),
+                      );
+                    },
+                    child: CircleAvatar(
+                      radius: 25,
+                      backgroundImage: AssetImage(matchingUser?.dpPath ?? 'assets/images/blankDp'),
+                    ),
+                  ),
+                );
 }
 
   
@@ -566,82 +585,88 @@ Container shortInfo(int index) {
               height: 45,
               child: Row(
                 children: [
-
-                  Padding(
-                    padding: const EdgeInsets.only(left: 10),
-                    child: Container(
-                      width: 70,
-                      height: 70,
-                      decoration: BoxDecoration(
-                        color: const Color(0xFFEFF5F4),
-                        borderRadius: BorderRadius.circular(20),
-                      ),
-                      child: Stack(
-                        children: [
-                          Positioned.fill(
-                            child: Image.asset(
-                              shorts[index].bgPath, 
-                              fit: BoxFit.cover,
-                            ),
-                          ),
-                          Center(
-                            child: Transform.scale(
-                              scale: 1,
-                              child: SvgPicture.asset('assets/icons/play_icon.svg'),
-                            )
-                          )
-                        ]
-                      )
-                    )
-                  ),
-
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Padding(
-                        padding: const EdgeInsets.only(left: 10, top: 20),
-                        child: Text(
-                          shorts[index].line1,
-                          style: const TextStyle(
-                            fontFamily: 'Gellix',
-                            fontWeight: FontWeight.w600,
-                            fontSize: 13.5
-                          )
-                        )
-                      ),
-                      const SizedBox(height: 3),
-                      Padding(
-                        padding: const EdgeInsets.only(left: 10),
-                        child: Text(
-                          shorts[index].line2,
-                          style: const TextStyle(
-                            fontFamily: 'Gellix',
-                            fontWeight: FontWeight.w600,
-                            fontSize: 13.5
-                          )                           
-                        )
-                      ),
-                      const SizedBox(height: 5),
-                      Row(
-                        children: [
-                          const SizedBox(width: 10),
-                          SvgPicture.asset('assets/icons/eye_icon.svg'),
-                          const SizedBox(width: 5),
-                          Text(
-                          shorts[index].views,
-                          style: const TextStyle(
-                            color: Color(0xFF9397A0),
-                            fontFamily: 'Gellix',
-                            fontWeight: FontWeight.w500,
-                            fontSize: 13.5
-                          )                           
-                        )
-                        ],
-                      )
-                    ],
-                  ),
+                  shortThumbnail(index),
+                  shortTitle(index),
                 ],
               ),
             );
+}
+
+Column shortTitle(int index) {
+  return Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.only(left: 10, top: 20),
+                      child: Text(
+                        shorts[index].line1,
+                        style: const TextStyle(
+                          fontFamily: 'Gellix',
+                          fontWeight: FontWeight.w600,
+                          fontSize: 13.5
+                        )
+                      )
+                    ),
+                    const SizedBox(height: 3),
+                    Padding(
+                      padding: const EdgeInsets.only(left: 10),
+                      child: Text(
+                        shorts[index].line2,
+                        style: const TextStyle(
+                          fontFamily: 'Gellix',
+                          fontWeight: FontWeight.w600,
+                          fontSize: 13.5
+                        )                           
+                      )
+                    ),
+                    const SizedBox(height: 5),
+                    Row(
+                      children: [
+                        const SizedBox(width: 10),
+                        SvgPicture.asset('assets/icons/eye_icon.svg'),
+                        const SizedBox(width: 5),
+                        Text(
+                        shorts[index].views,
+                        style: const TextStyle(
+                          color: Color(0xFF9397A0),
+                          fontFamily: 'Gellix',
+                          fontWeight: FontWeight.w500,
+                          fontSize: 13.5
+                        )                           
+                      )
+                      ],
+                    )
+                  ],
+                );
+}
+
+Padding shortThumbnail(int index) {
+  return Padding(
+                  padding: const EdgeInsets.only(left: 10),
+                  child: Container(
+                    width: 70,
+                    height: 70,
+                    decoration: BoxDecoration(
+                      color: const Color(0xFFEFF5F4),
+                      borderRadius: BorderRadius.circular(20),
+                    ),
+                    child: Stack(
+                      children: [
+                        Positioned.fill(
+                          child: Image.asset(
+                            shorts[index].bgPath, 
+                            fit: BoxFit.cover,
+                          ),
+                        ),
+                        Center(
+                          child: Transform.scale(
+                            scale: 1,
+                            child: SvgPicture.asset('assets/icons/play_icon.svg'),
+                          )
+                        )
+                      ]
+                    )
+                  )
+                );
 }
 }

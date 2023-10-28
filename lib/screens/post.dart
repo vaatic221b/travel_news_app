@@ -59,12 +59,7 @@ Widget build(BuildContext context) {
     ),
     body: Stack(
       children: [
-        Image.asset(
-          posts[widget.postIndex].bgPath,
-          fit: BoxFit.fill,
-          width: 500,
-          height: 500,
-        ),
+        backgroundImage(),
         SingleChildScrollView(
           child: Column(
             children: [
@@ -78,8 +73,17 @@ Widget build(BuildContext context) {
   );
 }
 
-
 //METHODS
+
+  Image backgroundImage() {
+    return Image.asset(
+        posts[widget.postIndex].bgPath,
+        fit: BoxFit.fill,
+        width: 500,
+        height: 500,
+      );
+  }
+
   Container completePost() {
     return Container(
               decoration: BoxDecoration(
@@ -104,68 +108,77 @@ Widget build(BuildContext context) {
               Container(
                 padding: const EdgeInsets.only(top: 380),
               ),
+              chevronBackButton(context),
+              bookmarkButton(),
+              starsIcons()
+      ],
+    );
+  }
 
-              Positioned(
-                left: 30,
-                top: 55,
-                child: GestureDetector(
-                  onTap: () {
-                    Navigator.of(context).pop(
-                      MaterialPageRoute(builder: (context) => const HomePage()),
-                    );
-                  },
-                  child: Container(
-                    width: 45,
-                    height: 45,
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(15),
-                      border: Border.all(color: Colors.white, width: 1.5),
-                    ),
-                    child: Transform.scale(
-                      scale: 0.4,
-                      child: SvgPicture.asset(
-                        'assets/icons/chevron_icon.svg',
-                        height: 20,
-                        width: 20,
-                      ),
-                    ),
+  Positioned starsIcons() {
+    return Positioned(
+              right: 100,
+              left: 100,
+              bottom: 10,
+              child: SvgPicture.asset(
+                'assets/icons/stars.svg',
+                height: 25,
+                width: 25,
+              ),
+            );
+  }
+
+  Positioned bookmarkButton() {
+    return Positioned(
+              right: 30,
+              top: 55,
+              child: Container(
+                width: 45, 
+                height: 45, 
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(15),
+                  border: Border.all(color: Colors.white, width: 1.5),
+                ),
+                child: Transform.scale(
+                  scale: 0.4, 
+                  child: SvgPicture.asset(
+                    'assets/icons/bookmark_white_icon.svg',
+                    height: 20,
+                    width: 20,
                   ),
                 ),
               ),
+            );
+  }
 
-              Positioned(
-                right: 30,
-                top: 55,
+  Positioned chevronBackButton(BuildContext context) {
+    return Positioned(
+              left: 30,
+              top: 55,
+              child: GestureDetector(
+                onTap: () {
+                  Navigator.of(context).pop(
+                    MaterialPageRoute(builder: (context) => const HomePage()),
+                  );
+                },
                 child: Container(
-                  width: 45, 
-                  height: 45, 
+                  width: 45,
+                  height: 45,
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(15),
                     border: Border.all(color: Colors.white, width: 1.5),
                   ),
                   child: Transform.scale(
-                    scale: 0.4, 
+                    scale: 0.4,
                     child: SvgPicture.asset(
-                      'assets/icons/bookmark_white_icon.svg',
+                      'assets/icons/chevron_icon.svg',
                       height: 20,
                       width: 20,
                     ),
                   ),
                 ),
               ),
-
-              Positioned(
-                right: 100,
-                left: 100,
-                bottom: 10,
-                child: SvgPicture.asset(
-                  'assets/icons/stars.svg',
-                  height: 25,
-                  width: 25,
-                ),
-              )
-      ],
-    );
+            );
   }
   
   Padding postTitle() {
@@ -216,85 +229,96 @@ Widget build(BuildContext context) {
           ),
           child: Row(
             children: [
-                  Padding(
-                    padding: const EdgeInsets.only(left: 10),
-                    child: GestureDetector(
-                      onTap: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) {
-                              return AuthorProfile(authorIndex: widget.postIndex); 
-                            },
-                          ),
-                        );
-                      },
-                      child: CircleAvatar(
-                        radius: 15,
-                        backgroundImage: AssetImage(matchingUser?.dpPath ?? 'assets/images/blankDp'),
-                      ),
-                    ),
-                  ),
+                  opProfilePic(matchingUser),
+                  opName(),
+                  datePosted(),
+                  postLength()      
+            ],
+          ),
+        )
+    );
+  }
 
-
-                  Padding(
-                    padding: const EdgeInsets.only(left: 10),
-                    child: GestureDetector(
-                      onTap: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) {
-                              return AuthorProfile(authorIndex: widget.postIndex); 
-                            },
-                          ),
-                        );
-                      },
-                      child: Text(
-                        posts[widget.postIndex].name,
+  Padding postLength() {
+    return Padding(
+                  padding: const EdgeInsets.only(left: 10),
+                  child: Row(
+                    children: [
+                      const Icon(Icons.brightness_1, size: 4, color: Color(0xFF9397A0)), 
+                      const SizedBox(width: 10), 
+                      Text(
+                        '${posts[widget.postIndex].length} min read',
                         style: const TextStyle(
                           fontFamily: 'Gellix',
                           fontSize: 13,
                           fontWeight: FontWeight.w300,
                         ),
                       ),
-                    ),
+                    ],
                   ),
+                );
+  }
 
-
-                  Padding(
-                        padding: const EdgeInsets.only(left: 15),
-                        child: Text(
-                          posts[widget.postIndex].date,
-                          style: const TextStyle(
-                            fontFamily: 'Gellix',
-                            fontSize: 13,
-                            fontWeight: FontWeight.w300
-                          )
+  Padding datePosted() {
+    return Padding(
+                      padding: const EdgeInsets.only(left: 15),
+                      child: Text(
+                        posts[widget.postIndex].date,
+                        style: const TextStyle(
+                          fontFamily: 'Gellix',
+                          fontSize: 13,
+                          fontWeight: FontWeight.w300
                         )
-                  ),
+                      )
+                );
+  }
 
-                  Padding(
-                    padding: const EdgeInsets.only(left: 10),
-                    child: Row(
-                      children: [
-                        const Icon(Icons.brightness_1, size: 4, color: Color(0xFF9397A0)), 
-                        const SizedBox(width: 10), 
-                        Text(
-                          '${posts[widget.postIndex].length} min read',
-                          style: const TextStyle(
-                            fontFamily: 'Gellix',
-                            fontSize: 13,
-                            fontWeight: FontWeight.w300,
-                          ),
+  Padding opName() {
+    return Padding(
+                  padding: const EdgeInsets.only(left: 10),
+                  child: GestureDetector(
+                    onTap: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) {
+                            return AuthorProfile(authorIndex: widget.postIndex); 
+                          },
                         ),
-                      ],
+                      );
+                    },
+                    child: Text(
+                      posts[widget.postIndex].name,
+                      style: const TextStyle(
+                        fontFamily: 'Gellix',
+                        fontSize: 13,
+                        fontWeight: FontWeight.w300,
+                      ),
                     ),
-                  )      
-            ],
-          ),
-        )
-    );
+                  ),
+                );
+  }
+
+  Padding opProfilePic(UserModel? matchingUser) {
+    return Padding(
+                  padding: const EdgeInsets.only(left: 10),
+                  child: GestureDetector(
+                    onTap: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) {
+                            return AuthorProfile(authorIndex: widget.postIndex); 
+                          },
+                        ),
+                      );
+                    },
+                    child: CircleAvatar(
+                      radius: 15,
+                      backgroundImage: AssetImage(matchingUser?.dpPath ?? 'assets/images/blankDp'),
+                    ),
+                  ),
+                );
   }
 
   Padding postDescription() {

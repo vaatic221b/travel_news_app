@@ -30,12 +30,6 @@ class _AuthorProfileState extends State<AuthorProfile> {
   List<PictureModel> pictures = [];
 
 //FUNCTIONS
-  void onItemTapped(int index) {
-    setState(() {
-      selectedIndex = index;
-    });
-  }
-
   int findPostIndexByLine1(String line1) {
   for (int i = 0; i < posts.length; i++) {
     if (posts[i].line1 == line1) {
@@ -222,108 +216,115 @@ class _AuthorProfileState extends State<AuthorProfile> {
       child: Center(
         child: Row(
           children: [
-
-            Expanded(
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  Text(
-                    matchingUser?.following ?? '',
-                    style: const TextStyle(
-                      color: Colors.white,
-                      fontFamily: 'Gellix',
-                      fontWeight: FontWeight.w700,
-                      fontSize: 16
-                    ),
-
-                  ),
-
-                  const SizedBox(height: 5),
-                
-                  const Text(
-                    "Following",
-                    style: TextStyle(
-                      color: Colors.white,
-                      fontSize: 12
-                    ),
-                  ),
-                ],
-              ),
-            ),
-
-            Container(
-              color: const Color(0xFFC1D4F9).withOpacity(0.2), // Customize the divider color
-              width: 1,
-              height: 38,
-            ),
-
-            Expanded(
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  Text(
-                    matchingUser?.posts ?? '',
-                    style: const TextStyle(
-                      color: Colors.white,
-                      fontFamily: 'Gellix',
-                      fontWeight: FontWeight.w700,
-                      fontSize: 16
-                    ),
-                    
-                    ),
-
-                  const SizedBox(height: 5),
-
-                  const Text(
-                    "Posts",
-                    style: TextStyle(
-                      color: Colors.white,
-                      fontSize: 12
-                    ),
-                    ),
-                ],
-              ),
-            ),
-
-            Container(
-              color: const Color(0xFFC1D4F9).withOpacity(0.2), // Customize the divider color
-              width: 1, 
-              height: 38,
-            ),
-
-            Expanded(
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  Text(
-                    matchingUser?.followers ?? '',
-                    style: const TextStyle(
-                      color: Colors.white,
-                      fontFamily: 'Gellix',
-                      fontWeight: FontWeight.w700,
-                      fontSize: 16
-                    ),
-                    ),
-
-                  const SizedBox(height: 5),
-
-                  const Text(
-                    "Followers",
-                    style: TextStyle(
-                      color: Colors.white,
-                      fontSize: 12 
-                    ),
-                    ),
-                ],
-              ),
-            ),
+            followingCount(matchingUser),
+            lineDivider(),
+            postsCount(matchingUser),
+            lineDivider(),
+            followersCount(matchingUser),
           ],
         ),
       ),
     );
+  }
+
+  Container lineDivider() {
+    return Container(
+            color: const Color(0xFFC1D4F9).withOpacity(0.2), 
+            width: 1,
+            height: 38,
+          );
+  }
+
+  Expanded followersCount(UserModel? matchingUser) {
+    return Expanded(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                Text(
+                  matchingUser?.followers ?? '',
+                  style: const TextStyle(
+                    color: Colors.white,
+                    fontFamily: 'Gellix',
+                    fontWeight: FontWeight.w700,
+                    fontSize: 16
+                  ),
+                  ),
+
+                const SizedBox(height: 5),
+
+                const Text(
+                  "Followers",
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontSize: 12 
+                  ),
+                  ),
+              ],
+            ),
+          );
+  }
+
+  Expanded postsCount(UserModel? matchingUser) {
+    return Expanded(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                Text(
+                  matchingUser?.posts ?? '',
+                  style: const TextStyle(
+                    color: Colors.white,
+                    fontFamily: 'Gellix',
+                    fontWeight: FontWeight.w700,
+                    fontSize: 16
+                  ),
+                  
+                  ),
+
+                const SizedBox(height: 5),
+
+                const Text(
+                  "Posts",
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontSize: 12
+                  ),
+                  ),
+              ],
+            ),
+          );
+  }
+
+  Expanded followingCount(UserModel? matchingUser) {
+    return Expanded(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                Text(
+                  matchingUser?.following ?? '',
+                  style: const TextStyle(
+                    color: Colors.white,
+                    fontFamily: 'Gellix',
+                    fontWeight: FontWeight.w700,
+                    fontSize: 16
+                  ),
+
+                ),
+
+                const SizedBox(height: 5),
+              
+                const Text(
+                  "Following",
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontSize: 12
+                  ),
+                ),
+              ],
+            ),
+          );
   }
   
   Container middleText() { 
