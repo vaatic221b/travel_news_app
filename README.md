@@ -1,3 +1,5 @@
 # travel_news_app
 
-A new Flutter project.
+Travel New App 
+
+Submitted by: Cleverson Ray G. Sucalit BSIT - 3
