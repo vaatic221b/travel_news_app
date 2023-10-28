@@ -540,9 +540,9 @@ class _AuthorProfileState extends State<AuthorProfile> {
   Container userGallery() {
     List<PictureModel> matchingPictures = pictures.where((picture) => picture.name == posts[widget.authorIndex].name).toList();
     return Container(
-      margin: const EdgeInsets.only(left: 30, right: 30),
+      margin: const EdgeInsets.only(left: 30),
       height: 130,
-      width: 500,
+      width: 600,
       color: const Color(0xFFFCFCFC),
       child: ListView.separated(
         itemCount: matchingPictures.length,
