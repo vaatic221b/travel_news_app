@@ -78,6 +78,7 @@ Widget build(BuildContext context) {
   );
 }
 
+
 //METHODS
   Container completePost() {
     return Container(
