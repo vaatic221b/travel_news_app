@@ -1,0 +1,37 @@
+name: travel_news_app
+description: A new Flutter project.
+publish_to: 'none'
+version: 0.1.0
+
+environment:
+  sdk: '>=3.1.0 <4.0.0'
+
+dependencies:
+  flutter:
+    sdk: flutter
+
+  flutter_svg: ^2.0.8
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_lints: ^2.0.0
+
+flutter:
+  uses-material-design: true
+
+  assets:
+  - assets/icons/
+  - assets/images/
+ 
+  fonts:
+    - family: Gellix
+      fonts:
+        - asset: fonts/Gellix-Regular.ttf
+        - asset: fonts/Gellix-Light.ttf
+          weight: 300
+        - asset: fonts/Gellix-Medium.ttf
+          weight: 500
+        - asset: fonts/Gellix-Bold.ttf
+          weight: 700
+
